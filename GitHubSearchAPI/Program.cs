@@ -1,6 +1,7 @@
 using GitHubSearchAPI.Interfaces;
 using GitHubSearchAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -27,6 +28,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     };
 });
 
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins",
@@ -37,6 +39,7 @@ builder.Services.AddCors(options =>
                           .WithHeaders("Authorization"));
 });
 
+builder.Services.AddSingleton<IAuthService, AuthService>();
 builder.Services.AddHttpClient<IGithubSearchService, GithubSearchService>();
 builder.Services.AddSingleton<IBookmarkService, BookmarkService>();
 
