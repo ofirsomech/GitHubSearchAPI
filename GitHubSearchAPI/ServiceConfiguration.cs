@@ -8,6 +8,5 @@ public static class ServiceConfiguration
         services.AddSingleton<IAuthService, AuthService>();
         services.AddHttpClient<IGithubSearchService, GithubSearchService>();
         services.AddSingleton<IJwtService, JwtService>();
-
     }
 }
