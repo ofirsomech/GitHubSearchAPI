@@ -9,20 +9,24 @@ namespace GitHubSearchAPI.Services
     public class JwtService : IJwtService
     {
         private readonly string _secretKey;
+        private readonly string _issuer;
         private readonly int _expirationInYears;
 
         public JwtService(IConfiguration configuration)
         {
             _secretKey = configuration["Jwt:Key"];
+            _issuer = configuration["Jwt:Issuer"];
             _expirationInYears = 1;
         }
 
         public string GenerateToken(string username)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_secretKey);
+            var key = Encoding.UTF8.GetBytes(_secretKey);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+                Issuer = _issuer,
+                Audience = _issuer,
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                 new Claim(ClaimTypes.Name, username)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace GitHubSearchAPI.Controllers
 {
     [ApiController]
-    //[Authorize]
+    [Authorize]
     [Route("[controller]")]
     public class GithubSearchController : ControllerBase
     {
