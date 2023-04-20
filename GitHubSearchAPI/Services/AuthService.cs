@@ -9,6 +9,13 @@ namespace GitHubSearchAPI.Services
 {
     public class AuthService : IAuthService
     {
+        private readonly IJwtService _jwtService;
+
+        public AuthService(IJwtService jwtService)
+        {
+            _jwtService = jwtService;
+        }
+
         public bool Authenticate(LoginDto loginDto)
         {
             return loginDto.Username == "root" && loginDto.Password == "123456";
@@ -16,19 +23,7 @@ namespace GitHubSearchAPI.Services
 
         public string GenerateJwtToken(string username)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("your_secret_key_here");
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                new Claim(ClaimTypes.Name, username)
-                }),
-                Expires = DateTime.UtcNow.AddYears(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            return _jwtService.GenerateToken(username);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using GitHubSearchAPI.Interfaces;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -14,8 +13,8 @@ namespace GitHubSearchAPI.Services
 
         public JwtService(IConfiguration configuration)
         {
-            _secretKey = configuration["Jwt:SecretKey"];
-            _expirationInYears = int.Parse(configuration["Jwt:ExpirationInYears"]);
+            _secretKey = configuration["Jwt:Key"];
+            _expirationInYears = 1;
         }
 
         public string GenerateToken(string username)
@@ -26,7 +25,7 @@ namespace GitHubSearchAPI.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, username)
+                new Claim(ClaimTypes.Name, username)
                 }),
                 Expires = DateTime.UtcNow.AddYears(_expirationInYears),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
