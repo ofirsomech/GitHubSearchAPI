@@ -13,8 +13,8 @@ To use this API, you'll need to have .NET Core 7 installed on your machine. You 
 #### Authentication
 To use the API, you need to authenticate first. Send a POST request to /Auth/login with the following JSON in the request body:
 {
-  "username": "yourusername",
-  "password": "yourpassword"
+  "username": "root",
+  "password": "123456"
 }
 If the authentication is successful, the response will include a JSON Web Token (JWT) that you can use to access the other endpoints.
 
